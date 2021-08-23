@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace async_streams_api.Controllers
 {
@@ -10,14 +11,16 @@ namespace async_streams_api.Controllers
         [HttpGet]
         public IAsyncEnumerable<int> Get()
         {
-            return GetNumberStreams();
+            return FetchItems();
         }
 
-        private async IAsyncEnumerable<int> GetNumberStreams()
+        static async IAsyncEnumerable<int> FetchItems()
         {
-            int index = 0;
-            while (true)
-                yield return index++;
+            for (int i = 1; i <= 10; i++)
+            {
+                await Task.Delay(1000);
+                yield return i;
+            }
         }
     }
 }
